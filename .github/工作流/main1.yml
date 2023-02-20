@@ -1,0 +1,28 @@
+名称：微信
+开：
+  workflow_dispatch：
+  时间表：
+    # 代表国际标准时间23点0分，北京时间需要+8小时，代表北京时间上午7点运行
+    - cron： '0 23 * * *'
+工作：
+#将工作流程中运行的所有作业组合在一起
+  构建：
+  #定义名为 build 的作业。子键将定义作业的属性
+    运行时间：Ubuntu-latest 
+    步骤：
+      - 用途：操作/checkout@v2
+    
+      - 名称：设置 Python 3.9
+        用途：操作/设置python@v2
+        与：
+          蟒蛇版本：3.12.0
+      - 名称：设置时区
+        运行： |
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+      - 名称：安装 pip 包
+        运行： |
+python -m pip install --upgrade pip
+pip3 安装 -r 要求.txt
+      - 名称：微信
+        运行： |
+蟒蛇3 main.py
